@@ -1,8 +1,6 @@
 const draggableItems = document.querySelectorAll('.draggable');
 const dropzone = document.getElementById('timeline-dropzone');
 const progressBar = document.getElementById('progress');
-const quizResult = document.getElementById('quiz-result');
-
 let droppedItems = [];
 let correctTimelineOrder = ['event1', 'event2', 'event3', 'event5', 'event4', 'event6'];
 
@@ -50,20 +48,5 @@ function checkTimelineOrder() {
         alert('Congratulations! You have arranged the events correctly!');
     } else {
         alert('The order is incorrect. Try again.');
-    }
-}
-
-// Quiz Functionality
-function checkAnswer() {
-    const selectedOption = document.querySelector('input[name="quiz"]:checked');
-
-    if (selectedOption) {
-        if (selectedOption.value === 'A') {
-            quizResult.textContent = 'Correct! Dinosaurs Extinction marked the end of the Cretaceous period.';
-        } else {
-            quizResult.textContent = 'Incorrect. Try again.';
-        }
-    } else {
-        quizResult.textContent = 'Please select an answer.';
     }
 }
