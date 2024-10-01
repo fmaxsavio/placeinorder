@@ -3,24 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crossword Puzzle Generator</title>
+    <title>Evolution Timeline</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Crossword Puzzle Generator</h1>
-        <form id="crosswordForm">
-            <div id="question-fields"></div>
-            <button type="button" onclick="generateCrossword()">Generate Crossword</button>
-        </form>
+        <h1>Evolution Timeline</h1>
 
-        <p id="success-message">Crossword successfully created!</p>
-        <div id="crosswordGrid"></div>
-        <button onclick="downloadPDF()">Download as PDF</button>
+        <!-- Progress Bar -->
+        <div id="progress-bar">
+            <div id="progress"></div>
+        </div>
+
+        <!-- Timeline Section -->
+        <div class="timeline">
+            <div id="timeline-dropzone" class="dropzone">
+                <p>Drop Evolution Events Here (From Earliest to Latest)</p>
+            </div>
+        </div>
+
+        <!-- Draggable Evolution Events -->
+        <div class="drag-items">
+            <h3>Drag and Drop the Following Events:</h3>
+            <div class="draggable" draggable="true" id="event1">Formation of Earth</div>
+            <div class="draggable" draggable="true" id="event2">First Single-Celled Organisms</div>
+            <div class="draggable" draggable="true" id="event3">First Fish Appeared</div>
+            <div class="draggable" draggable="true" id="event4">Dinosaurs Extinction</div>
+            <div class="draggable" draggable="true" id="event5">First Mammals Appeared</div>
+            <div class="draggable" draggable="true" id="event6">First Humans Appeared</div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="quiz">
+            <h3>Evolution Quiz:</h3>
+            <p>What event marked the end of the Cretaceous period?</p>
+            <input type="radio" name="quiz" value="A"> A. Dinosaurs Extinction<br>
+            <input type="radio" name="quiz" value="B"> B. First Mammals Appeared<br>
+            <input type="radio" name="quiz" value="C"> C. First Fish Appeared<br>
+            <button onclick="checkAnswer()">Submit Answer</button>
+        </div>
+
+        <!-- Quiz Feedback -->
+        <div id="quiz-result"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
