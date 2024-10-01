@@ -55,12 +55,3 @@ h1 {
     background-color: #4CAF50;
     width: 0%;
 }
-
-.quiz {
-    margin: 20px 0;
-}
-
-#quiz-result {
-    font-size: 1.2em;
-    margin-top: 10px;
-}
