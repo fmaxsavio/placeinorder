@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Puzzle Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            text-align: center;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        #success-message {
+            color: green;
+            display: none;
+            margin-top: 20px;
+        }
+        canvas {
+            margin-top: 20px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Crossword Puzzle Generator</h1>
+    <form id="crosswordForm">
+        <div id="question-fields"></div>
+        <button type="button" onclick="generateCrossword()">Generate Crossword</button>
+    </form>
+
+    <p id="success-message">Crossword successfully created!</p>
+    <canvas id="crosswordCanvas" width="400" height="400"></canvas>
+    <button onclick="downloadPDF()">Download as PDF</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+<script>
+    // Generate input fields dynamically for 20 questions
+    const formFields = document.getElementById('question-fields');
+    for (let i = 1; i <= 20; i++) {
+        const questionInput = document.createElement('input');
+        questionInput.type = 'text';
+        questionInput.placeholder = 'Enter question ' + i;
+        questionInput.id = 'question' + i;
+
+        const answerInput = document.createElement('input');
+        answerInput.type = 'text';
+        answerInput.placeholder = 'Enter answer ' + i;
+        answerInput.id = 'answer' + i;
+
+        formFields.appendChild(questionInput);
+        formFields.appendChild(answerInput);
+    }
+
+    function generateCrossword() {
+        const canvas = document.getElementById('crosswordCanvas');
+        const ctx = canvas.getContext('2d');
+        const gridSize = 20; // size of each square
+
+        // Clear canvas for new crossword
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const words = [];
+        for (let i = 1; i <= 20; i++) {
+            const answer = document.getElementById('answer' + i).value.trim();
+            if (answer) {
+                words.push(answer.toUpperCase());
+            }
+        }
+
+        // Simple logic to add alternating horizontal and vertical words
+        for (let i = 0; i < words.length; i++) {
+            const word = words[i];
+            const x = i % 2 === 0 ? 1 : Math.floor(canvas.width / (gridSize * 2));
+            const y = i % 2 === 0 ? Math.floor(canvas.height / (gridSize * 2)) : 1;
+
+            for (let j = 0; j < word.length; j++) {
+                if (i % 2 === 0) { // horizontal
+                    ctx.fillText(word[j], (x + j) * gridSize, y * gridSize);
+                } else { // vertical
+                    ctx.fillText(word[j], x * gridSize, (y + j) * gridSize);
+                }
+            }
+        }
+
+        // Display success message
+        document.getElementById('success-message').style.display = 'block';
+    }
+
+    // Function to download crossword as PDF
+    function downloadPDF() {
+        const canvas = document.getElementById('crosswordCanvas');
+        html2canvas(canvas).then(function (canvas) {
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF();
+            pdf.addImage(imgData, 'PNG', 10, 10);
+            pdf.save("crossword.pdf");
+        });
+    }
+</script>
+</body>
+</html>
